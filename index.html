@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zohaib Ali · fullstack architect</title>
+    <!-- Bootstrap 5 + Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        /* ----- CSS Variables (light/dark) ----- */
+        :root {
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-soft: #f1f5f9;
+            --text-primary: #0b1120;
+            --text-secondary: #334155;
+            --accent: #2563eb;
+            --accent-light: #dbeafe;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --bg-soft: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent: #3b82f6;
+            --accent-light: #1e3a5f;
+            --border-color: #334155;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ----- global reset ----- */
+        * {
+            transition: background 0.2s ease, border 0.2s, color 0.15s;
+        }
+
+        body {
+            background: var(--bg-body);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, sans-serif;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .text-secondary {
+            color: var(--text-secondary) !important;
+        }
+
+        /* ----- dark toggle ----- */
+        .dark-toggle {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            padding: 0.6rem 1.2rem;
+            border-radius: 60px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .dark-toggle:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        /* ----- navbar ----- */
+        .navbar {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.8rem 0;
+            backdrop-filter: blur(8px);
+        }
+
+        .navbar .nav-link {
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin: 0 0.3rem;
+            border-radius: 40px;
+            padding: 0.5rem 1rem;
+        }
+
+        .navbar .nav-link:hover,
+        .navbar .nav-link.active {
+            color: var(--accent);
+            background: var(--accent-light);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent), #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            font-size: 1.8rem;
+        }
+
+        /* ----- hero section ----- */
+        .hero-section {
+            padding: 5rem 0 3rem;
+        }
+
+        .profile-img-wrapper {
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 6px solid var(--accent-light);
+            box-shadow: var(--shadow);
+            background: var(--bg-card);
+        }
+
+        .profile-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .badge-available {
+            background: var(--bg-card);
+            padding: 0.5rem 1.2rem;
+            border-radius: 60px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            color: var(--text-primary);
+        }
+
+        /* ----- cards / sections ----- */
+        .bg-soft {
+            background: var(--bg-soft);
+        }
+
+        .skill-card,
+        .service-card,
+        .project-card,
+        .contact-form-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 1.5rem;
+            padding: 1.8rem;
+            box-shadow: var(--shadow);
+            height: 100%;
+            transition: 0.2s;
+        }
+
+        .service-card {
+            text-align: center;
+            padding: 2rem 1.5rem;
+        }
+
+        .service-card .icon-lg {
+            font-size: 2.8rem;
+            color: var(--accent);
+            margin-bottom: 1.2rem;
+            display: inline-block;
+            background: var(--accent-light);
+            padding: 0.8rem;
+            border-radius: 18px;
+        }
+
+        /* progress bars */
+        .progress {
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 20px;
+        }
+
+        .progress-bar {
+            background: var(--accent);
+            border-radius: 20px;
+        }
+
+        /* badges */
+        .builtWith {
+            background: var(--bg-soft);
+            color: var(--text-secondary);
+            font-weight: 500;
+            border-radius: 40px;
+            padding: 0.4rem 1rem;
+        }
+
+        /* form */
+        .form-control {
+            background: var(--bg-body);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: 60px;
+            padding: 0.8rem 1.5rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-light);
+        }
+
+        textarea.form-control {
+            border-radius: 1.5rem;
+        }
+
+        /* footer */
+        footer {
+            border-top: 1px solid var(--border-color);
+            background: var(--bg-card);
+        }
+
+        /* responsive video */
+        .project-card video {
+            border-radius: 1.2rem;
+            width: 100%;
+            height: auto;
+
+            object-fit: cover;
+            background: #000;
+        }
+
+        /* small extras */
+        .btn-primary {
+            background: var(--accent);
+            border: none;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .profile-img-wrapper {
+                width: 200px;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body data-theme="light">
+
+    <!-- DARK MODE TOGGLE -->
+    <div class="position-fixed top-60 end-0 m-4 z-3">
+        <button id="darkModeToggle" class="dark-toggle border-0">
+            <i id="darkIcon" class="fas fa-moon"></i>
+            <span id="darkText">Dark mode</span>
+        </button>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#"><span class="gradient-text">Z.A</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a href="#home" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="#skills" class="nav-link">Skills</a></li>
+                    <li class="nav-item"><a href="#services" class="nav-link">Services</a></li>
+                    <li class="nav-item"><a href="#projects" class="nav-link">Projects</a></li>
+                    <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+                <a href="#contact" class="btn btn-primary rounded-pill px-4"
+                    style="background:var(--accent);border:none;">Hire me</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HOME / HERO -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-7">
+                    <div class="d-inline-flex align-items-center gap-2 bg-white px-4 py-2 rounded-pill border mb-4"
+                        style="background:var(--bg-card)!important;">
+                        <i class="fas fa-server text-primary"></i>
+                        <span class="small fw-semibold">Laravel Specialist · Backend Architect · API Engineer</span>
+                    </div>
+                    <h1 class="display-3 fw-bold mb-3">Zohaib Ali</h1>
+                    <p class="lead fs-3 text-secondary mb-4">
+                        I architect and develop
+                        <span class="fw-semibold" style="color:var(--accent);">multi‑vendor eCommerce</span>,
+                        <span class="fw-semibold" style="color:var(--accent);">SaaS multi‑tenant</span>,
+                        and scalable <span class="fw-semibold" style="color:var(--accent);">LMS solutions</span>.
+                    </p>
+                    <p class="fs-5 text-secondary mb-5">PHP · Laravel · MySQL · Stripe · REST APIs · 4+ Years Experience
+                    </p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a download href="assets/resume.pdf" class="btn btn-lg rounded-pill px-5 py-3 fw-semibold"
+                            style="background:var(--accent);color:white;"><i class="fas fa-download me-2"></i>Download
+                            Resume</a>
+                        <a href="#contact" class="btn btn-lg rounded-pill px-5 py-3 fw-semibold"
+                            style="background:var(--bg-card);color:var(--text-primary);border:1px solid var(--border-color);"><i
+                                class="fas fa-paper-plane me-2"></i>Contact</a>
+                    </div>
+                    <div class="d-flex gap-4 mt-5">
+                        <a href="https://www.facebook.com/zohaibalikh" target="_blank" class="fs-3"
+                            style="color:var(--text-secondary);"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.instagram.com/zalikhan555/profilecard/" target="_blank" class="fs-3"
+                            style="color:var(--text-secondary);"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/in/zohaib-ali-3132a721b" target="_blank" class="fs-3"
+                            style="color:var(--text-secondary);"><i class="fab fa-linkedin"></i></a>
+                        <a href="mailto:zohaib5laravel@gmail.com" class="fs-3" style="color:var(--text-secondary);"><i
+                                class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-5 text-center">
+                    <div class="position-relative d-inline-block">
+                        <div class="profile-img-wrapper mx-auto">
+                            <img src="assets/profile.jpeg" alt="Zohaib Ali portrait" class="profile-img" />
+                        </div>
+                        <div
+                            class="badge-available position-absolute bottom-0 start-0 translate-middle-y ms-3 d-flex align-items-center gap-2">
+                            <i class="fas fa-check-circle text-success"></i>
+                            <span class="fw-semibold">Available for work</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="py-5 my-5">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-7">
+                    <span class="text-uppercase small fw-bold" style="color:var(--accent);letter-spacing:3px;">—
+                        about</span>
+                    <h2 class="display-5 fw-bold mt-2 mb-4">Who am I?</h2>
+                    <p class="fs-5" style="color:var(--text-secondary);">I'm a Laravel specialist and backend architect.
+                        I design and build scalable, high‑performance web applications powered by clean architecture and
+                        well‑structured RESTful APIs.</p>
+                    <p class="fs-5" style="color:var(--text-secondary);">My expertise includes developing multi‑vendor
+                        eCommerce platforms, SaaS multi‑tenant systems, and robust LMS solutions. I focus on performance
+                        optimization, system scalability, and transforming complex business ideas into reliable digital
+                        products.</p>
+                    <p class="fs-5" style="color:var(--text-secondary);">Currently available for freelance projects and
+                        long‑term collaborations.</p>
+                </div>
+                <div class="col-lg-5">
+                    <div class="contact-form-card h-100 d-flex flex-column justify-content-center">
+                        <i class="fas fa-paper-plane fs-1 mb-4" style="color:var(--accent);"></i>
+                        <h3 class="fw-bold mb-3">Let’s Build Something Powerful</h3>
+                        <p class="text-secondary mb-4 fs-5">Have a SaaS idea, marketplace platform, or scalable web
+                            project in mind? Let’s discuss how we can turn it into a production‑ready system.</p>
+                        <a href="#contact" class="btn btn-lg rounded-pill py-3 w-100"
+                            style="background:var(--accent);color:white;">Start Conversation <i
+                                class="fas fa-arrow-right ms-2"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS (improved + languages highlighted) -->
+    <section id="skills" class="py-5 bg-soft">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <span class="text-uppercase small fw-bold" style="color:var(--accent);letter-spacing:3px;">—
+                    expertise</span>
+                <h2 class="display-5 fw-bold mt-2">Skills & proficiency</h2>
+                <p class="fs-5 text-secondary">4+ years of hands‑on experience</p>
+            </div>
+            <div class="row g-4">
+                <!-- left: technical stack -->
+                <div class="col-lg-6">
+                    <div class="skill-card p-4 h-100">
+                        <div class="d-flex gap-3 align-items-center mb-4">
+                            <div class="p-3 rounded-3" style="background:var(--accent-light);"><i
+                                    class="fas fa-server fs-2" style="color:var(--accent);"></i></div>
+                            <h3 class="fw-bold mb-0">Technical Stack</h3>
+                        </div>
+                        <div class="mb-4">
+                            <h6 class="fw-bold">Backend</h6>
+                            <p class="text-secondary mb-0">PHP · Laravel · REST APIs · WebSockets · Stripe Integration
+                            </p>
+                        </div>
+                        <div class="mb-4">
+                            <h6 class="fw-bold">Database</h6>
+                            <p class="text-secondary mb-0">MySQL · Query Optimization · Database Architecture</p>
+                        </div>
+                        <div class="mb-4">
+                            <h6 class="fw-bold">Frontend</h6>
+                            <p class="text-secondary mb-0">JavaScript · Bootstrap · Vue.js · HTML/CSS</p>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold">Systems Experience</h6>
+                            <p class="text-secondary mb-0">SaaS Multi‑Tenant · Multi‑Vendor Platforms · LMS Systems</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- right: languages (enhanced) -->
+                <div class="col-lg-6">
+                    <div class="skill-card p-4 h-100">
+                        <div class="d-flex gap-3 align-items-center mb-4">
+                            <div class="p-3 rounded-3" style="background:var(--accent-light);"><i
+                                    class="fas fa-language fs-2" style="color:var(--accent);"></i></div>
+                            <h3 class="fw-bold mb-0">Languages</h3>
+                        </div>
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between mb-2"><span>English <span
+                                        class="text-secondary">(professional)</span></span> <span>93%</span></div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width:93%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between mb-2"><span>Urdu <span
+                                        class="text-secondary">(native)</span></span> <span>95%</span></div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width:95%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between mb-2"><span>Pashto <span
+                                        class="text-secondary">(native)</span></span> <span>100%</span></div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width:100%"></div>
+                            </div>
+                        </div>
+                        <!-- extra language hint -->
+                        <p class="text-secondary mt-2 mb-0"><i class="fas fa-globe me-2"></i>Fluent in 3 languages ·
+                            cross‑cultural communication</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="py-5 my-4">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="text-uppercase small fw-bold" style="color:var(--accent);letter-spacing:3px;">— what i
+                    do</span>
+                <h2 class="display-5 fw-bold mt-2">Services</h2>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-card"><i class="fas fa-server icon-lg"></i>
+                        <h4 class="fw-bold mb-3">Laravel Application Development</h4>
+                        <p class="text-secondary">Custom‑built, scalable Laravel apps with clean architecture and
+                            production‑ready structure.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-card"><i class="fas fa-store icon-lg"></i>
+                        <h4 class="fw-bold mb-3">Marketplace & SaaS Systems</h4>
+                        <p class="text-secondary">Multi‑vendor eCommerce and SaaS multi‑tenant systems built for
+                            scalability and revenue growth.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-card"><i class="fas fa-network-wired icon-lg"></i>
+                        <h4 class="fw-bold mb-3">API Development & Integrations</h4>
+                        <p class="text-secondary">Secure RESTful APIs, third‑party integrations, Stripe payments, and
+                            system‑to‑system communication.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-card"><i class="fas fa-tools icon-lg"></i>
+                        <h4 class="fw-bold mb-3">System Optimization & Upgrades</h4>
+                        <p class="text-secondary">Performance optimization, database tuning, refactoring, and scaling
+                            existing Laravel applications.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS (added direct link to My World) -->
+    <section id="projects" class="py-5 bg-soft">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <span class="text-uppercase small fw-bold" style="color:var(--accent);letter-spacing:3px;">—
+                    portfolio</span>
+                <h2 class="display-5 fw-bold mt-2">Featured projects</h2>
+                <p class="fs-5 text-secondary">Real‑world applications built from scratch</p>
+            </div>
+            <div class="row g-4">
+
+                <div class="col-lg-6">
+                    <div class="project-card">
+
+                        <!-- IMAGE SLIDER -->
+                        <div id="posCarousel" class="carousel slide" data-bs-ride="carousel">
+
+                            <!-- Indicators -->
+                            <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#posCarousel" data-bs-slide-to="0"
+                                    class="active"></button>
+                                <button type="button" data-bs-target="#posCarousel" data-bs-slide-to="1"></button>
+                                <button type="button" data-bs-target="#posCarousel" data-bs-slide-to="2"></button>
+                            </div>
+
+                            <!-- Images -->
+                            <div class="carousel-inner rounded">
+                                <div class="carousel-item active">
+                                    <img src="assets/pos1.png" class="d-block w-100" alt="POS Dashboard">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="assets/pos2.png" class="d-block w-100" alt="Inventory System">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="assets/pos3.png" class="d-block w-100" alt="Offline Orders">
+                                </div>
+                            </div>
+
+                            <!-- Controls -->
+                            <button class="carousel-control-prev" type="button" data-bs-target="#posCarousel"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon"></span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#posCarousel"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon"></span>
+                            </button>
+
+                        </div>
+
+                        <!-- TITLE -->
+                        <div class="d-flex justify-content-between align-items-start mt-3">
+                            <h3 class="fw-bold">POS System</h3>
+                            <span class="badge px-3 py-2 rounded-pill"
+                                style="background:var(--accent-light);color:var(--accent);">
+                                POS & Inventory System
+                            </span>
+                        </div>
+
+                        <!-- DESCRIPTION -->
+                        <p class="text-secondary mt-2">
+                            "POS System" is a Laravel Livewire-based POS and inventory management system designed for
+                            retail operations.
+                            It supports real-time stock tracking, billing, and reporting, along with offline order
+                            placement that syncs
+                            once the system reconnects. The system includes product management, inventory alerts,
+                            customer tracking, and role-based access control for staff.
+                        </p>
+
+                        <!-- TECH STACK -->
+                        <div class="d-flex flex-wrap gap-2 mb-3 mt-2">
+                            <span class="badge builtWith p-2 border">Laravel</span>
+                            <span class="badge builtWith p-2 border">Livewire</span>
+                            <span class="badge builtWith p-2 border">MySQL</span>
+                            <span class="badge builtWith p-2 border">Inventory Management</span>
+                            <span class="badge builtWith p-2 border">Offline Sync</span>
+                            <span class="badge builtWith p-2 border">Bootstrap</span>
+                        </div>
+
+                        <!-- LINK -->
+                        <a href="https://pos-system-production-4c19.up.railway.app/login" target="_blank" class="btn btn-outline-primary rounded-pill px-4 py-2"
+                            style="border-color:var(--accent);color:var(--accent);">
+                            <i class="fas fa-link me-2"></i>Visit POS System
+                        </a>
+
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="project-card">
+                        <video src="assets/appointy.mp4" controls autoplay loop muted playsinline></video>
+                        <div class="d-flex justify-content-between align-items-start mt-3">
+                            <h3 class="fw-bold">Appointy</h3>
+                            <span class="badge px-3 py-2 rounded-pill"
+                                style="background:var(--accent-light);color:var(--accent);">
+                                Multi-Vendor SaaS
+                            </span>
+                        </div>
+                        <p class="text-secondary mt-2">
+                            "Appointy" is a full-featured multi-vendor SaaS booking platform developed using Laravel,
+                            Vue.js, Stripe, and REST APIs. The system allows administrators to manage subscription plans
+                            and platform settings, vendors to create service businesses and manage bookings, and
+                            customers to discover vendors and schedule appointments online. Key features include
+                            subscription billing, free trials, staff management, availability scheduling, appointment
+                            booking, payment processing, invoicing, vendor dashboards, and role-based access control.
+                            The application is designed to scale across multiple service industries through a single
+                            SaaS platform.
+                        </p>
+                        <div class="d-flex flex-wrap gap-2 mb-3 mt-2">
+                            <span class="badge builtWith p-2 border">Laravel</span>
+                            <span class="badge builtWith p-2 border">Vue.js</span>
+                            <span class="badge builtWith p-2 border">Tailwind CSS</span>
+                            <span class="badge builtWith p-2 border">MySQL</span>
+                            <span class="badge builtWith p-2 border">Stripe Connect</span>
+                            <span class="badge builtWith p-2 border">REST API</span>
+                            <span class="badge builtWith p-2 border">JWT Auth</span>
+                            <span class="badge builtWith p-2 border">Multi-Vendor SaaS</span>
+                        </div>
+                        <!-- LIVE LINK added -->
+                        <a href="https://appointy-production-968d.up.railway.app" target="_blank"
+                            class="btn btn-outline-primary rounded-pill px-4 py-2"
+                            style="border-color:var(--accent);color:var(--accent);">
+                            <i class="fas fa-link me-2"></i>Visit Appointy
+                        </a>
+                    </div>
+                </div>
+                <!-- My World – with live link -->
+                <div class="col-lg-6">
+                    <div class="project-card">
+                        <video src="assets/myworld.mp4" controls autoplay loop muted playsinline></video>
+                        <div class="d-flex justify-content-between align-items-start mt-3">
+                            <h3 class="fw-bold">My World</h3>
+                            <span class="badge px-3 py-2 rounded-pill"
+                                style="background:var(--accent-light);color:var(--accent);">Responsive Blog</span>
+                        </div>
+                        <p class="text-secondary mt-2">"My World" is a modern, fully responsive blog built in Laravel.
+                            It features a clean design, dynamic content management, and a powerful admin panel to manage
+                            posts, categories, gallery and banner images efficiently.</p>
+                        <div class="d-flex flex-wrap gap-2 mb-3 mt-2">
+                            <span class="badge builtWith p-2 border">PHP</span>
+                            <span class="badge builtWith p-2 border">Laravel</span>
+                            <span class="badge builtWith p-2 border">MySQL</span>
+                            <span class="badge builtWith p-2 border">Bootstrap</span>
+                        </div>
+                        <!-- LIVE LINK added -->
+                        <a href="https://my-world-production-5c4d.up.railway.app/" target="_blank"
+                            class="btn btn-outline-primary rounded-pill px-4 py-2"
+                            style="border-color:var(--accent);color:var(--accent);">
+                            <i class="fas fa-link me-2"></i>Visit My World
+                        </a>
+                    </div>
+                </div>
+                <!-- TeaTime Chat -->
+                <div class="col-lg-6">
+                    <div class="project-card">
+                        <video src="assets/teatime.mp4" controls autoplay loop muted playsinline></video>
+                        <div class="d-flex justify-content-between align-items-start mt-3">
+                            <h3 class="fw-bold">TeaTime Chat App</h3>
+                            <span class="badge px-3 py-2 rounded-pill"
+                                style="background:var(--accent-light);color:var(--accent);">Real-time Chat</span>
+                        </div>
+                        <p class="text-secondary mt-2">"TeaTime" is a chat application built in Laravel. It includes
+                            jokes, quotes pages, real‑time chat functionality, and an admin panel to manage everything.
+                        </p>
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <span class="badge builtWith p-2 border">PHP</span>
+                            <span class="badge builtWith p-2 border">Laravel</span>
+                            <span class="badge builtWith p-2 border">Reverb</span>
+                            <span class="badge builtWith p-2 border">MySQL</span>
+                            <span class="badge builtWith p-2 border">Bootstrap</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-5 my-5">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-5">
+                    <span class="text-uppercase small fw-bold" style="color:var(--accent);letter-spacing:3px;">—
+                        contact</span>
+                    <h2 class="display-5 fw-bold mt-2 mb-4">Let's create something amazing</h2>
+                    <p class="fs-5 text-secondary mb-5">Whether it's a project, collaboration or just a tech chat – I'll
+                        get back to you within hours.</p>
+                    <div class="d-flex align-items-center gap-4 mb-4">
+                        <div class="p-3 rounded-3" style="background:var(--accent-light);"><i
+                                class="fas fa-phone-alt fs-3" style="color:var(--accent);"></i></div>
+                        <div><span class="text-secondary">Phone</span>
+                            <p class="fw-bold fs-5 mb-0">+923468813698</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-4 mb-4">
+                        <div class="p-3 rounded-3" style="background:var(--accent-light);"><i
+                                class="fas fa-envelope fs-3" style="color:var(--accent);"></i></div>
+                        <div><span class="text-secondary">Email</span>
+                            <p class="fw-bold fs-5 mb-0">zohaib5laravel@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-4">
+                        <div class="p-3 rounded-3" style="background:var(--accent-light);"><i
+                                class="fas fa-map-marker-alt fs-3" style="color:var(--accent);"></i></div>
+                        <div><span class="text-secondary">Location</span>
+                            <p class="fw-bold fs-5 mb-0">Pakistan</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="contact-form-card">
+                        <h3 class="fw-bold mb-4">Send a message</h3>
+                        <form id="emailForm">
+                            <input type="text" name="_honey" style="display:none;" />
+                            <input type="hidden" name="_captcha" value="false" />
+                            <input type="hidden" name="_subject" value="New message from Zohaib Portfolio" />
+                            <div class="mb-4"><input type="text" class="form-control form-control-lg" name="name"
+                                    placeholder="Your name" required /></div>
+                            <div class="mb-4"><input type="email" class="form-control form-control-lg" name="email"
+                                    placeholder="Email address" required /></div>
+                            <div class="mb-4"><textarea class="form-control form-control-lg" name="message" rows="5"
+                                    placeholder="Your message" required></textarea></div>
+                            <button type="submit" id="submitBtn" class="btn btn-lg w-100 rounded-pill py-3 fw-semibold"
+                                style="background:var(--accent);color:white;"><i
+                                    class="fas fa-paper-plane me-2"></i>Send message</button>
+                            <div id="formFeedback" class="mt-4 text-center fw-semibold"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-5">
+        <div class="container text-center">
+            <div class="d-flex justify-content-center gap-4 mb-4">
+                <a href="https://www.facebook.com/zohaibalikh" class="fs-4" style="color:var(--text-secondary);"><i
+                        class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/zalikhan555/profilecard/" class="fs-4"
+                    style="color:var(--text-secondary);"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/zohaib-ali-3132a721b" class="fs-4"
+                    style="color:var(--text-secondary);"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:zohaib5laravel@gmail.com" class="fs-4" style="color:var(--text-secondary);"><i
+                        class="fas fa-envelope"></i></a>
+            </div>
+            <p class="text-secondary">© 2026 Zohaib Ali — fullstack developer</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        (function () {
+            // theme
+            function setTheme(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+                const icon = document.getElementById('darkIcon');
+                const text = document.getElementById('darkText');
+                if (theme === 'dark') {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                    text.innerText = 'Light mode';
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                    text.innerText = 'Dark mode';
+                }
+            }
+            const saved = localStorage.getItem('theme');
+            setTheme(saved || 'light');
+            document.getElementById('darkModeToggle').addEventListener('click', function () {
+                const current = document.documentElement.getAttribute('data-theme');
+                setTheme(current === 'light' ? 'dark' : 'light');
+            });
+
+            // form
+            const form = document.getElementById('emailForm');
+            const feedback = document.getElementById('formFeedback');
+            const submitBtn = document.getElementById('submitBtn');
+            if (form) {
+                form.addEventListener('submit', async function (e) {
+                    e.preventDefault();
+                    const formData = new FormData(form);
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> sending...';
+                    feedback.innerHTML = '';
+                    try {
+                        const res = await fetch('https://formsubmit.co/ajax/zohaib5laravel@gmail.com', {
+                            method: 'POST',
+                            headers: { 'Accept': 'application/json' },
+                            body: formData
+                        });
+                        if (res.ok) {
+                            feedback.innerHTML = '<span class="text-success bg-success bg-opacity-10 px-4 py-2 rounded-pill">✅ Thank you! Your message was sent.</span>';
+                            form.reset();
+                        } else {
+                            feedback.innerHTML = '<span class="text-danger bg-danger bg-opacity-10 px-4 py-2 rounded-pill">❌ Error. Email me directly: zohaib5laravel@gmail.com</span>';
+                        }
+                    } catch (_) {
+                        feedback.innerHTML = '<span class="text-danger bg-danger bg-opacity-10 px-4 py-2 rounded-pill">❌ Network error. Please send an email.</span>';
+                    } finally {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Send message';
+                    }
+                });
+            }
+        })();
+    </script>
+</body>
+
+</html>
